@@ -13,23 +13,18 @@
     <div class="row" style="margin-top:50px">
         <div class="col-md-20">
             <div class="row">
-                <form action="" method="post">
-                    <div class="col">
-                        <h3>게시물 목록</h3>
-                    </div>
+                <form th:action="@{/create/data}" method="post">
+                    <div class="col"><h3>게시물 목록</h3></div>
                     <button type="submit" class="btn btn-dark">게시글 저장</button>
-                    <button type="button" class="btn btn-dark"><a th:href="@{/}">취소</a></button>
+                    <button type="button" id="btnCancel" class="btn btn-dark" th:onclick="cancelBtn()">취소</button>
                     <div class="mb-3">
                         <label for="title" class="form-label">제목</label>
-                        <input type="text" class="form-control" id="title">
+                        <input type="text" class="form-control" id="title" name="title">
                     </div>
                     <div class="mb-3">
                         <div id="emailHelp" class="form-text">내용</div>
                         <div class="form-floating">
-                            <textarea class="form-control"
-                                      id="floatingTextarea2"
-                                      style="height: 500px"></textarea>
-                            <label for="floatingTextarea2">내용을 입력해 주세요</label>
+                            <label for="cont"></label><textarea class="form-control" id="cont" style="height: 500px" name="cont"></textarea>
                         </div>
                     </div>
                 </form>
@@ -40,8 +35,10 @@
 </body>
 </html>
 <script>
-    {
-
+    //취소버튼
+    function cancelBtn(){
+        console.log("function cancelBtn");
+        location.href = "/";
     }
 </script>
 
