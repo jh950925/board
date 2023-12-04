@@ -14,8 +14,10 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: update # 어떤 방식 으로 테이블 생성 할 것인지
     properties:
       hibernate:
-        format_sql: true
-        show_sql: ture
+        highlight_sql: true # 색상 변경
+        format_sql: true    # 쿼리 출력 할 것인지
+        show_sql: true      # 쿼리 추력
+        use_sql_comments: true  # 주석 출력

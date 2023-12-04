@@ -6,6 +6,7 @@ import my.study.board.dto.BoardVo;
 import my.study.board.entity.BoardEntity;
 import my.study.board.service.BoardService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,17 +22,24 @@ public class BoardController {
 
     // 게시글 조회 페이지 이동
     @GetMapping("")
-    public ModelAndView MvList() {
-        ModelAndView modelAndView = new ModelAndView();
+    public String MvList(Model model) {
+        log.info("root");
 
         List<BoardEntity> dataList = boardService.selectList();
+        model.addAttribute("list", dataList);
 
-        modelAndView.addObject("list", dataList);
-        modelAndView.setViewName("list");
+        return "list";
+    }
 
-        log.info("Object={}", modelAndView.getModel());
+    //게시글 조회
+    @GetMapping("select/data")
+    public String getList(Model model){
+        log.info("selectData");
 
-        return modelAndView;
+        List<BoardEntity> dataList = boardService.selectList();
+        model.addAttribute("list", dataList);
+
+        return "list";
     }
     
     // 게시글 추가 페이지 이동
@@ -50,7 +58,7 @@ public class BoardController {
         log.info("vo : " + boardVo.getCont());
 
         boardService.createData(boardVo);
-        return "list";
+        return "redirect:/";
     }
 
     // 게시글 수정
