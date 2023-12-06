@@ -44,10 +44,23 @@
     }
 
     function deleteBtn(){
-        let id = document.getElementById('boardId').value;
-        console.log("id : " + id);
         console.log("function deleteBtn");
-        location.href = "/delete/data/" + id;
+        const param = {
+            boardId : document.getElementById('boardId').value
+        };
+
+        const url = "/delete/data/" + document.getElementById('boardId').value;
+        fetch(url,{
+            method : "DELETE"
+            , headers : {
+                "Content-Type" : "application/json"
+            }
+            , body: JSON.stringify(param)
+        }).then(response => {
+            const msg = (response.ok) ? "댓글이 삭제됐습니다." : "댓글 삭제 실패..!";
+            alert(msg);
+            location.href = "/";
+        });
     }
 </script>
 

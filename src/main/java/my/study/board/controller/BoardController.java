@@ -91,12 +91,6 @@ public class BoardController {
     }
 
     // 댓글 수정
-    // 댓글 삭제
-    @DeleteMapping("/delete/data/{boardId}")
-    public String deleteData(@PathVariable Long boardId) {
-        log.info("delete Controller");
-        boardService.deleteData(boardId);
-        return "/";
-    }
+
 
 }
