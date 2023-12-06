@@ -34,8 +34,10 @@
                     </thead>
                     <tbody>
                     <tr th:each="list : ${list}">
-                        <td th:text="${list.boardId}">번호</td>
-                        <td th:text="${list.title}">제목</td>
+                        <td th:text="${list.boardId}"><</td>
+                        <td>
+                            <a th:href="@{/update/view/{boardId}(boardId = ${list.boardId})}" th:text="${list.title}">제목</a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -47,5 +49,6 @@
     function createBtn(){
        location.href = "create/view";
     }
+
 </script>
 </html>

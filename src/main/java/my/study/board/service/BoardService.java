@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -32,6 +33,12 @@ public class BoardService {
         return list;
     }
 
+    // 데이터 상세 정보
+    public BoardEntity detailData(Long boardId) {
+
+        return boardRepository.findById(boardId).get();
+    }
+
     // 게시글 등록
     public BoardEntity createData(BoardVo boardVo) {
         log.info("Service createData");
@@ -44,9 +51,17 @@ public class BoardService {
         return boardRepository.save(boardEntity);
     }
 
-
-
     // 게시글 수정
-    
+
     // 게시글 삭제
+    public void deleteData(Long boardId) {
+        log.info("Service deleteData");
+        log.info("boardId : " + boardId);
+
+        BoardEntity boardEntity = new BoardEntity();
+        boardEntity.setBoardId(boardId);
+
+        boardRepository.deleteById(boardId);
+    }
+
 }

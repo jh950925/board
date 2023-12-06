@@ -14,14 +14,18 @@ import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping("/")
 @RequiredArgsConstructor
 public class BoardController {
 
     private final BoardService boardService;
 
-    // 게시글 조회 페이지 이동
-    @GetMapping("")
+    /**
+     * 게시글 목록 페이지 이동
+     *
+     * @param
+     * @return String
+     */
+    @GetMapping("/")
     public String MvList(Model model) {
         log.info("root");
 
@@ -31,9 +35,40 @@ public class BoardController {
         return "list";
     }
 
-    //게시글 조회
-    @GetMapping("select/data")
-    public String getList(Model model){
+    /**
+     * 게시글 추가 페이지 이동
+     *
+     * @return
+     */
+    @GetMapping("/create/view")
+    public String CreateView() {
+        return "createBoard";
+    }
+
+    // 게시글 수정 페이지 이동
+    @GetMapping("/update/view/{boardId}")
+    public String UpdateView(@PathVariable Long boardId, Model model) {
+        // id값 가져오기
+        log.info("id : " + boardId);
+
+        // service에서 상세조회 데이터 확인
+        model.addAttribute("data", boardService.detailData(boardId));
+        log.info("상세정보 : " + model.getAttribute("data"));
+
+        // 데이터 넘기기
+        return "createBoard";
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * 게시글 목록 조회
+     *
+     * @param model
+     * @return String
+     */
+    @GetMapping("/select/dataList")
+    public String getList(Model model) {
         log.info("selectData");
 
         List<BoardEntity> dataList = boardService.selectList();
@@ -41,46 +76,27 @@ public class BoardController {
 
         return "list";
     }
-    
-    // 게시글 추가 페이지 이동
-    @GetMapping("create/view")
-    public String CreateView(){
-        log.info("저장 페이지 이동");
-        return "createBoard";
-    }
-    
+
+    /**
+     * 게시글 추가
+     *
+     * @param boardVo
+     * @return String
+     */
     // 게시글 추가
-    @PostMapping("create/data")
+    @PostMapping("/create/data")
     public String createData(BoardVo boardVo) {
-        log.info("vo : " + boardVo.toString());
-
-        log.info("vo : " + boardVo.getTitle());
-        log.info("vo : " + boardVo.getCont());
-
         boardService.createData(boardVo);
         return "redirect:/";
     }
 
-    // 게시글 수정
-    @PatchMapping("updat/data/{id}")
-    public ModelAndView updateData(BoardVo boardVo, @PathVariable Long id){
-        ModelAndView modelAndView = new ModelAndView();
-
-        modelAndView.setViewName("list");
-        modelAndView.addObject("data");
-
-        return modelAndView;
-    }
-
-    // 게시글 삭제
-    @DeleteMapping("delete/data{id}")
-    public int delete(@PathVariable Long id) {
-
-        return 0;
-    }
-
-    // 댓글 추가
     // 댓글 수정
     // 댓글 삭제
+    @DeleteMapping("/delete/data/{boardId}")
+    public String deleteData(@PathVariable Long boardId) {
+        log.info("delete Controller");
+        boardService.deleteData(boardId);
+        return "/";
+    }
 
 }

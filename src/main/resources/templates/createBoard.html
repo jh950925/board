@@ -17,14 +17,16 @@
                     <div class="col"><h3>게시물 목록</h3></div>
                     <button type="submit" class="btn btn-dark">게시글 저장</button>
                     <button type="button" id="btnCancel" class="btn btn-dark" th:onclick="cancelBtn()">취소</button>
-                    <div class="mb-3">
+                    <button type="button" id="btnDelete" class="btn btn-delete" th:onclick="deleteBtn()">삭제</button>
+                    <div class="mb-3" style="margin-top: 30px">
                         <label for="title" class="form-label">제목</label>
-                        <input type="text" class="form-control" id="title" name="title">
+                        <input type="text" class="form-control" id="title" name="title" th:value="${data.title}">
+                        <input type="hidden" id="boardId" name="boardId" th:value="${data.boardId}">
                     </div>
                     <div class="mb-3">
                         <div id="emailHelp" class="form-text">내용</div>
                         <div class="form-floating">
-                            <label for="cont"></label><textarea class="form-control" id="cont" style="height: 500px" name="cont"></textarea>
+                            <label for="cont"></label><textarea class="form-control" id="cont" style="height: 500px" name="cont" th:text="${data.cont}"></textarea>
                         </div>
                     </div>
                 </form>
@@ -39,6 +41,13 @@
     function cancelBtn(){
         console.log("function cancelBtn");
         location.href = "/";
+    }
+
+    function deleteBtn(){
+        let id = document.getElementById('boardId').value;
+        console.log("id : " + id);
+        console.log("function deleteBtn");
+        location.href = "/delete/data/" + id;
     }
 </script>
 
